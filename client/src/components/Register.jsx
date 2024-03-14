@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
-    confirm: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,6 +25,7 @@ const Register = () => {
       .post("http://localhost:6969/register", user)
       .then((res) => {
         console.log(res);
+        navigate("/login");
       })
       .catch((error) => {
         console.error(error);
@@ -85,31 +86,13 @@ const Register = () => {
             required
           />
         </div>
-        <div className="mb-5">
-          <label
-            htmlFor="confirm"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Confirm Password
-          </label>
-          <input
-            onChange={handleChange}
-            name="confirm"
-            type="password"
-            id="confirm"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            required
-          />
-        </div>
 
-     
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
-          >
-            Sign Up
-          </button>
-       
+        <button
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+        >
+          Sign Up
+        </button>
       </form>
     </div>
   );

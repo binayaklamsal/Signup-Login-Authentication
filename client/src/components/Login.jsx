@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
-const Login = (setLoginUser) => {
+
+const Login = () => {
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate(); // Use useNavigate hook
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,9 +24,12 @@ const Login = (setLoginUser) => {
       .post("http://localhost:6969/login", input)
       .then((res) => {
         console.log(res);
-        setLoginUser(res.data.user);
-
-        navigate("/");
+        if (res.data === "Success") {
+          navigate("/"); // Navigate to home page on successful login
+        } else {
+          alert("You are not registered to this service");
+          navigate("/register"); // Navigate to registration page
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -32,14 +38,14 @@ const Login = (setLoginUser) => {
     <div className="bg-slate-500 h-screen w-auto flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="min-w-[400px] mx-auto flex flex-col gap-3 border p-9 pt-7 bg-slate-400 rounded-lg shadow-md "
+        className="min-w-[400px] mx-auto flex flex-col gap-3 border p-9 pt-7 bg-slate-400 rounded-lg shadow-md"
       >
         <h1 className="text-3xl">Sign In Form</h1>
 
         <div className="mb-5">
           <label
             htmlFor="email"
-            className="block mb-2 text-sm font-medium text-gray-900 "
+            className="block mb-2 text-sm font-medium text-gray-900"
           >
             Email
           </label>
@@ -64,7 +70,7 @@ const Login = (setLoginUser) => {
             name="password"
             onChange={handleChange}
             id="password"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -74,15 +80,15 @@ const Login = (setLoginUser) => {
               id="terms"
               aria-describedby="terms"
               type="checkbox"
-              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
+              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
               required=""
-            ></input>
+            />
           </div>
           <div className="ml-3 text-sm">
-            <label htmlFor="terms" className="font-light  ">
+            <label htmlFor="terms" className="font-light">
               I accept the{" "}
               <a
-                className="font-medium text-black-600 hover:underline "
+                className="font-medium text-black-600 hover:underline"
                 href="#"
               >
                 Terms and Conditions.
@@ -92,9 +98,9 @@ const Login = (setLoginUser) => {
         </div>
         <button
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
         >
-          Log In
+          Login
         </button>
       </form>
     </div>
