@@ -12,9 +12,11 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
+    setUser((pre) => {
+      return {
+        ...pre,
+        [name]: value,
+      };
     });
   };
 
@@ -49,6 +51,7 @@ const Register = () => {
           <input
             onChange={handleChange}
             type="name"
+            name="name"
             id="name"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
